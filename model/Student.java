@@ -2,7 +2,11 @@ package com.example.demo.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -10,7 +14,8 @@ import javax.persistence.Table;
 public class Student 
 {
 	@Id
-	@Column(name="stu_id")
+	@Column(name="stu_id") 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int stu_id;
 	
 	@Column(name="stu_name")
@@ -22,16 +27,19 @@ public class Student
 	@Column(name="gender")
 	private String gender;
 	
-	@Column(name="dept_id")
-	private int dept_id;
+	@OneToOne
+	@JoinColumn(name="dept_id")
+	private Department dept;
 	
-	public Student(int stu_id, String stu_name, int age, String gender, int dept_id) {
+	public Student() {
+	}
+	public Student(int stu_id, String stu_name, int age, String gender, Department dept) {
 		super();
 		this.stu_id = stu_id;
 		this.stu_name = stu_name;
 		this.age = age;
 		this.gender = gender;
-		this.dept_id = dept_id;
+		this.dept = dept;
 	}
 	
 	public int getStu_id() {
@@ -58,17 +66,19 @@ public class Student
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public int getDept_id() {
-		return dept_id;
-	}
-	public void setDept_id(int dept_id) {
-		this.dept_id = dept_id;
-	}
 	
+	public Department getDept() {
+		return dept;
+	}
+
+	public void setDept(Department dept) {
+		this.dept = dept;
+	}
+
 	@Override
 	public String toString() {
 		return "Student [stu_id=" + stu_id + ", stu_name=" + stu_name + ", age=" + age + ", gender=" + gender
-				+ ", dept_id=" + dept_id + "]";
+				+ ", dept_id=" + dept + "]";
 	}
 		
 }

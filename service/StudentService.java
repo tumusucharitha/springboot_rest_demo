@@ -2,13 +2,12 @@ package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.StudentDao;
-import com.example.demo.model.Data;
+import com.example.demo.model.Student;
 
 @Service
 public class StudentService 
@@ -16,39 +15,40 @@ public class StudentService
 	@Autowired
 	private StudentDao stuDao;
 	
-	public List<Data> getData()
+	public List<Student> getData()
 	{
-		List<Data> listData = new ArrayList<Data>();
+		List<Student> listData = new ArrayList<Student>();
 		stuDao.findAll().forEach(listData::add);
 		return listData;
 	}
 
-	public Data getDataById(int id)
+	public Student getDataById(int id)
 	{
-		List<Data> listData = new ArrayList<Data>();
+		List<Student> listData = new ArrayList<Student>();
 		listData = getData();
-		Data d1 = new Data();
-		for(Data d2: listData)
+		Student s1 = new Student();
+		for(Student s2: listData)
 		{
-			if(id == d2.getId())
+			if(id == s2.getStu_id())
 			{
-				d1.setId(d2.getId());
-				d1.setName(d2.getName());
-				d1.setAddress(d2.getAddress());
+				s1.setStu_id(s2.getStu_id());
+				s1.setStu_name(s2.getStu_name());
+				s1.setAge(s2.getAge());
+				s1.setGender(s2.getGender());
 			}
 		}
-		return d1;
+		return s1;
 	}
 	
-	public void saveData(Data data1)
+	public void saveData(Student stu1)
 	{
 		System.out.println("inside service class of save method..");
-		stuDao.save(data1);
+		stuDao.save(stu1);
 	}
 	
-	public void updateData(Data data1)
+	public void updateData(Student stu1)
 	{
-		stuDao.save(data1);
+		stuDao.save(stu1);
 		System.out.println("Data is updated..");
 	}
 	
